@@ -9,10 +9,22 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // 引入公共样式文件
 import '@/styles/index.less'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 // 注册element-ui
 Vue.use(ElementUI)
+
+// 添加请求拦截器
+axios.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
+  var token = localStorage.getItem('manager_token')
+  config.headers['Authorization'] = token
+  return config
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error)
+})
 
 // 添加路由导航守卫
 router.beforeEach((to, from, next) => {

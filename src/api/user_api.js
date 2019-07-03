@@ -17,3 +17,18 @@ export const getUserList = (params) => {
     params: params
   })
 }
+// 实现新增用户数据
+export const addUser = (data) => {
+  return axios({
+    method: 'post',
+    url: 'users',
+    data
+  })
+}
+// 实现删除用户数据
+export const removeUser = (id) => {
+  return axios({
+    method: 'delete',
+    url: `users/:${id}`
+  })
+}
