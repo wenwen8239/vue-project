@@ -10,6 +10,11 @@ import Home from '@/views/Home.vue'
 import Wel from '@/views/welcome.vue'
 // 引入用户列表子组件
 import Users from '@/views/users/index.vue'
+// 引入用户管理子组件
+import Role from '@/views/right/roleList.vue'
+// 引入权限管理子组件
+import Right from '@/views/right/rightList.vue'
+
 // 注册路由
 Vue.use(VueRouter)
 // 创建一个路由对象
@@ -49,6 +54,18 @@ var router = new VueRouter({
           name: 'Users',
           path: 'users',
           component: Users
+        },
+        // 设置角色管理页
+        {
+          name: 'Role',
+          path: 'roles',
+          component: Role
+        },
+        // 设置权限管理页
+        {
+          name: 'Right',
+          path: 'right',
+          component: Right
         }
       ]
     }

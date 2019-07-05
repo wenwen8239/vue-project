@@ -236,6 +236,8 @@ export default {
             .then(res => {
               console.log(res)
               if (res.data.meta.status === 201) {
+                // 提示消息
+                this.$message.success(res.data.meta.msg)
                 // 隐藏弹出框
                 this.addDialogFormVisible = false
                 // 重置表单元素设置
@@ -375,7 +377,7 @@ export default {
     },
     // 实现用户编辑
     editUserSubmit () {
-      this.$refs.editForm.validate((valid) => {
+      this.$refs.editForm.validate(valid => {
         if (valid) {
           // 验证文本框内容是否有填写
           editUser(this.editForm)
