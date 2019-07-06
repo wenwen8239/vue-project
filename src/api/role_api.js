@@ -32,7 +32,7 @@ export const addRoles = (data) => {
 // 实现删除角色
 export const delRoleById = (id) => {
   return axios({
-    mehtod: 'delete',
+    method: 'delete',
     url: `roles/${id}`
   })
 }
