@@ -84,7 +84,7 @@
         <el-header>
           <i class="myicon myicon-menu toggle-btn"></i>
           <span class="system-title">后台管理系统</span>
-          <a href="javascript:void(0)" class="welcome">退出</a>
+          <a href="javascript:viod(0)" class="welcome" @click="loginOut">退出</a>
         </el-header>
         <el-main>
           <router-view></router-view>
@@ -94,7 +94,17 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  methods: {
+    // 实现退出功能
+    loginOut () {
+      // 将本地存储的token清除
+      localStorage.removeItem('manager_token')
+      // 跳转至登录页
+      this.$router.push('/login')
+    }
+  }
+}
 </script>
 <style lang="less" scoped>
 .home {

@@ -36,3 +36,17 @@ export const delRoleById = (id) => {
     url: `roles/${id}`
   })
 }
+// 根据id查找对应的角色
+export const editRoleById = (id) => {
+  return axios({
+    url: `roles/${id}`
+  })
+}
+// 实现编辑角色
+export const editRole = (data) => {
+  return axios({
+    method: 'put',
+    url: `roles/${data.id}`,
+    data: { roleName: data.roleName, roleDesc: data.roleDesc }
+  })
+}
