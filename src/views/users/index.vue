@@ -296,6 +296,12 @@ export default {
               this.pagenum = Math.ceil((this.total - 1) / this.pagesize) < this.pagenum ? --this.pagenum : this.pagenum
               // 重新刷新页面
               this.init()
+            } else {
+              // 提示消息
+              this.$message({
+                type: 'warning',
+                message: res.data.meta.msg
+              })
             }
           })
           .catch(err1 => {
@@ -313,7 +319,7 @@ export default {
     },
     // 实现分配角色数据的替换显示
     showgrantDialog (row) {
-      console.log(row)
+      // console.log(row)
       // 将对话框显示
       this.grantDialogFormVisible = true
       // 修改文本框的用户名
@@ -368,7 +374,7 @@ export default {
     showEditDialog (row) {
       // 设置编辑用户对话框显示
       this.editDialogFormVisible = true
-      console.log(row)
+      // console.log(row)
       // 修改对话框的信息
       this.editForm.id = row.id
       this.editForm.username = row.username

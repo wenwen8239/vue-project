@@ -43,7 +43,7 @@ export default {
   mounted () {
     getAllRightList('list')
       .then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.data.meta.status === 200) {
           this.rightList = res.data.data
         }

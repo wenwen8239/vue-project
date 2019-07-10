@@ -14,6 +14,12 @@ import Users from '@/views/users/index.vue'
 import Role from '@/views/right/roleList.vue'
 // 引入权限管理子组件
 import Right from '@/views/right/rightList.vue'
+// 引入商品管理页面
+import Goods from '@/views/goods/goods.vue'
+// 引入商品列表页面
+import List from '@/views/goods/list.vue'
+// 引入添加商品页面
+import Add from '@/views/goods/add.vue'
 
 // 注册路由
 Vue.use(VueRouter)
@@ -23,7 +29,7 @@ var router = new VueRouter({
     // 配置默认路由
     {
       path: '/',
-      redirect: { name: 'Wel' }
+      redirect: { name: 'Home' }
     },
     // 配置单个路由对象
     // 设置登录页
@@ -37,12 +43,9 @@ var router = new VueRouter({
       name: 'Home',
       path: '/Home',
       component: Home,
+      // 重定向首页页面显示
+      redirect: { name: 'Wel' },
       children: [
-        // 重定向首页页面显示
-        {
-          path: '/Home',
-          redirect: { name: 'Wel' }
-        },
         // 设置欢迎页
         {
           name: 'Wel',
@@ -64,8 +67,28 @@ var router = new VueRouter({
         // 设置权限管理页
         {
           name: 'Right',
-          path: 'right',
+          path: 'rights',
           component: Right
+        },
+        // 商品管理页面
+        {
+          name: 'Goods',
+          path: 'goods',
+          component: Goods,
+          redirect: { name: 'List' },
+          children: [
+            // 商品列表页面
+            {
+              name: 'List',
+              path: 'lists',
+              component: List
+            },
+            {
+              name: 'Add',
+              path: 'add',
+              component: Add
+            }
+          ]
         }
       ]
     }

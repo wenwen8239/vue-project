@@ -12,69 +12,15 @@
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-submenu index="1">
+          <el-submenu :index="first.id + ''" v-for=" first in menuList" :key="first.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{first.authName}}</span>
             </template>
-            <el-menu-item index="/home/users">
+            <el-menu-item :index="'/home/'+second.path" v-for="second in first.children" :key="second.id">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>用户列表</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item index="/home/roles">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>角色列表</span>
-              </template>
-            </el-menu-item>
-            <el-menu-item index="/home/right">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>权限列表</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>商品管理</span>
-            </template>
-            <el-menu-item index="3-1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>订单管理</span>
-            </template>
-            <el-menu-item index="4-1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>数据统计</span>
-            </template>
-            <el-menu-item index="5-1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
+                <span>{{second.authName}}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -94,7 +40,25 @@
   </div>
 </template>
 <script>
+// 引入api接口
+import { getLeftMenuList } from '@/api/right_api.js'
 export default {
+  data () {
+    return {
+      menuList: []
+    }
+  },
+  mounted () {
+    // 获取左侧用户菜单权限显示
+    getLeftMenuList()
+      .then(res => {
+        // console.log(res)
+        this.menuList = res.data.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
   methods: {
     // 实现退出功能
     loginOut () {

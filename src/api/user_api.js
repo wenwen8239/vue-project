@@ -1,6 +1,6 @@
 // 这里是设置用户api接口的文件
 // 引入axios
-import axios from '@/api/commit.js'
+import axios from '@/api/common.js'
 
 // 实现用户登陆
 export const login = (data) => {

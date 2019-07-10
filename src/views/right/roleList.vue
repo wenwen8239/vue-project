@@ -100,7 +100,7 @@
     <el-dialog title="编辑角色" :visible.sync="editDialogFormVisible">
       <el-form :model="editForm" :rules="rules" ref="editForm" :label-width="'100px'">
         <el-form-item label="角色名称" prop="roleName">
-          <el-input v-model="editForm.roleName" auto-complete="off" disabled></el-input>
+          <el-input v-model="editForm.roleName" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="描述" prop="roleDesc">
           <el-input v-model="editForm.roleDesc" auto-complete="off"></el-input>
@@ -173,7 +173,6 @@ export default {
           if (res.data.meta.status === 200) {
             this.roleList = res.data.data
           }
-          console.log(res)
         })
         .catch(err => {
           console.log(err)
@@ -209,7 +208,7 @@ export default {
       // 调用接口展示树形组件数据
       getAllRightList('tree')
         .then(res => {
-          console.log(res)
+          // console.log(res)
           this.rightList = res.data.data
         })
         .catch(err => {
@@ -218,7 +217,7 @@ export default {
       // 在每次打开对话框的时候初始化数组
       this.checkedArr.length = 0
       // 实现属性结构节点的默认选择
-      row.children.forEach((first, index) => {
+      row.children.forEach(first => {
         if (first.children && first.children.length > 0) {
           first.children.forEach(second => {
             if (second.children && second.children.length > 0) {
@@ -262,6 +261,12 @@ export default {
               message: res.data.meta.msg
             })
             this.init()
+          } else {
+            // 显示提示信息
+            this.$message({
+              type: 'warning',
+              message: res.data.meta.msg
+            })
           }
         })
         .catch(err => {
@@ -275,7 +280,7 @@ export default {
         if (valid) {
           addRoles(this.addForm)
             .then(res => {
-              console.log(res)
+              // console.log(res)
               if (res.data.meta.status === 201) {
                 // 添加角色对话框隐藏
                 this.addDialogFormVisible = false
@@ -285,6 +290,9 @@ export default {
                 this.$refs.addForm.resetFields()
                 // 刷新页面
                 this.init()
+              } else {
+                // 给出提示
+                this.$message.warning(res.data.meta.msg)
               }
             })
             .catch(err1 => {
@@ -314,10 +322,15 @@ export default {
             if (res.data.meta.status === 200) {
               this.$message({
                 type: 'success',
-                message: '删除成功!'
+                message: res.data.meta.msg
               })
               // 刷新页面
-              // this.init()
+              this.init()
+            } else {
+              this.$message({
+                type: 'warning',
+                message: res.data.meta.msg
+              })
             }
           })
       }).catch(() => {
@@ -329,7 +342,7 @@ export default {
     },
     // 显示编辑角色
     editRoleDialog (row) {
-      console.log(row)
+      // console.log(row)
       // 显示编辑角色模态框
       this.editDialogFormVisible = true
       this.editForm.id = row.id
