@@ -30,7 +30,10 @@
         <el-header>
           <i class="myicon myicon-menu toggle-btn"></i>
           <span class="system-title">后台管理系统</span>
-          <a href="javascript:viod(0)" class="welcome" @click="loginOut">退出</a>
+          <div class="welcome">
+            <span>欢迎您：{{$store.getters.getUsername}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" @click="loginOut">退出</a>
+          </div>
         </el-header>
         <el-main>
           <router-view></router-view>
@@ -53,7 +56,9 @@ export default {
     getLeftMenuList()
       .then(res => {
         // console.log(res)
-        this.menuList = res.data.data
+        if (res.data.meta.status === 200) {
+          this.menuList = res.data.data
+        }
       })
       .catch(err => {
         console.log(err)
@@ -65,7 +70,7 @@ export default {
       // 将本地存储的token清除
       localStorage.removeItem('manager_token')
       // 跳转至登录页
-      this.$router.push('/login')
+      this.$router.push({ name: 'Login' })
     }
   }
 }

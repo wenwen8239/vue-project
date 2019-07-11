@@ -20,6 +20,10 @@ import Goods from '@/views/goods/goods.vue'
 import List from '@/views/goods/list.vue'
 // 引入添加商品页面
 import Add from '@/views/goods/add.vue'
+// 引入商品分类页面
+import Categories from '@/views/goods/categories.vue'
+// 引入订单列表页面
+import Order from '@/views/order/orders.vue'
 
 // 注册路由
 Vue.use(VueRouter)
@@ -89,6 +93,18 @@ var router = new VueRouter({
               component: Add
             }
           ]
+        },
+        // 商品分类页面
+        {
+          name: 'Categories',
+          path: 'categories',
+          component: Categories
+        },
+        // 订单列表页面
+        {
+          name: 'Order',
+          path: 'orders',
+          component: Order
         }
       ]
     }

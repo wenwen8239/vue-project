@@ -49,6 +49,12 @@ export default {
               if (res.data.meta.status === 200) {
                 // 把当前登录成功返回的token存储到浏览器内存中
                 localStorage.setItem('manager_token', res.data.data.token)
+                // 将数据存储到vuex的store中
+                // this.$store.state.username = res.data.data.username
+                // 这个是同步调用的方式，不建议使用
+                // this.$store.commit('setUsername', res.data.data.username)
+                // 以异步的但是进行数据的处理
+                this.$store.dispatch('setUsernameAction', res.data.data.username)
                 // 登录成功跳转首页
                 this.$router.push({ name: 'Home' })
               } else {

@@ -9,6 +9,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // 引入公共样式文件
 import '@/styles/index.less'
+// 引入store
+import store from './store'
 
 Vue.config.productionTip = false
 // 注册element-ui
@@ -29,5 +31,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   // 注入路由
   router,
+  // 注入store
+  store,
   render: h => h(App)
 }).$mount('#app')

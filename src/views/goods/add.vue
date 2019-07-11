@@ -56,9 +56,8 @@
             v-model="addForm.goods_introduce"
             ref="myQuillEditor"
             :options="editorOption"
-            @blur="onEditorBlur($event)"
-            @focus="onEditorFocus($event)"
-            @ready="onEditorReady($event)">
+            style="height: 400px;border-bottom:1px solid #ccc"
+          >
           </quill-editor>
         </el-tab-pane>
       </el-tabs>
@@ -74,6 +73,7 @@
 // 引入api接口
 import { getCateList } from '@/api/categories_api.js'
 import { quillEditor } from 'vue-quill-editor'
+import { addGoods } from '@/api/goods_api.js'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
@@ -89,10 +89,13 @@ export default {
       addForm: {
         goods_name: '',
         goods_price: '',
+        goods_number: '',
         goods_weight: '',
         goods_cat: '',
+        goods_introduce: '',
         pics: [],
-        goods_introduce: ''
+        attrs: [],
+        goods_state: 1 // 手动设置商品状态
       },
       // 级联菜单数据源
       goodsCateList: [],
@@ -123,6 +126,8 @@ export default {
     getcate (value) {
       // console.log(value)
       // console.log(this.cascaderProps.value)
+      // 获取双向绑定数据
+      this.addForm.goods_cat = value.join(',')
     },
     // 移除图片时触发
     handleRemove (file, fileList) {
@@ -149,8 +154,28 @@ export default {
       // console.log(fileList)
       this.addForm.pics.push({ 'pic': response.data.tmp_path })
     },
+    // 添加商品
     addGoods () {
-      console.log(this.addForm.pics)
+      addGoods(this.addForm)
+        .then(res => {
+          console.log(res)
+          if (res.data.meta.status === 201) {
+            this.$message({
+              type: 'success',
+              message: res.data.meta.msg
+            })
+            // 跳转页面
+            this.$router.push({ name: 'List' })
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.data.meta.msg
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     // 上传文件前限制文件的类型
     beforeUpload (file) {
@@ -162,16 +187,6 @@ export default {
         })
         return false
       }
-    },
-    // 富文本
-    onEditorBlur (quill) {
-      console.log('editor blur!', quill)
-    },
-    onEditorFocus (quill) {
-      console.log('editor focus!', quill)
-    },
-    onEditorReady (quill) {
-      console.log('editor ready!', quill)
     }
   }
 }

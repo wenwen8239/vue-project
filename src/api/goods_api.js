@@ -7,3 +7,11 @@ export const getAllGoodList = (params) => {
     params
   })
 }
+// 添加商品
+export const addGoods = (data) => {
+  return axios({
+    method: 'post',
+    url: 'goods',
+    data
+  })
+}
